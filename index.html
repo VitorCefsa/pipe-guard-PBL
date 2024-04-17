@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PipeGuard - Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <header class="bg-dark text-light py-4">
+        <div class="container">
+            <h1 class="mb-0">PipeGuard - Home</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="incidents.html">Incidents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about-us.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <h1 class="text-center">Water Leak Incidents</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Leak Types</h5>
+                        <ul id="leakTypeList" class="list-group">
+                            <!-- Lista de tipos de vazamento será inserida aqui dinamicamente -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Severity Chart</h5>
+                        <canvas id="severityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Cloud Resource Monitoring Dashboard</h1>
+        <div class="card">
+            <div class="card-header">
+                Resource Utilization
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="card-title">CPU Usage</h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                        </div>
+                        <h5 class="card-title">RAM Usage</h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                        </div>
+                        <h5 class="card-title">Disk Storage</h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Security</h5>
+                        <p class="card-text">Firewall: Enabled</p>
+                        <p class="card-text">Encryption: Enabled</p>
+                        <h5 class="card-title mt-3">Load Balancing</h5>
+                        <p class="card-text">Algorithm: Round Robin</p>
+                        <p class="card-text">Health Checks: Enabled</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="data.js"></script>
+    <script>
+        // Função para contar o número de incidentes por gravidade
+        function countIncidentsBySeverity(incidents) {
+            const counts = {};
+            incidents.forEach(incident => {
+                counts[incident.severity] = (counts[incident.severity] || 0) + 1;
+            });
+            return counts;
+        }
+
+        // Dados dos incidentes
+        const severityData = countIncidentsBySeverity(incidents);
+
+        // Configuração do gráfico de gravidade
+        const severityChart = new Chart(document.getElementById('severityChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(severityData),
+                datasets: [{
+                    label: 'Severity',
+                    data: Object.values(severityData),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(255, 205, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Função para listar os tipos de vazamento
+        function listLeakTypes(incidents) {
+            const leakTypes = incidents.map(incident => incident.leakType);
+            const uniqueLeakTypes = Array.from(new Set(leakTypes));
+            const leakTypeList = document.getElementById('leakTypeList');
+            uniqueLeakTypes.forEach(leakType => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item');
+                listItem.textContent = leakType;
+                leakTypeList.appendChild(listItem);
+            });
+        }
+
+        // Chama a função para listar os tipos de vazamento
+        listLeakTypes(incidents);
+    </script>
+        <footer class="bg-dark text-light py-3 mt-4">
+            <div class="container">
+                <p class="mb-0">&copy; 2024 PipeGuard Inc. All rights reserved.</p>
+            </div>
+        </footer>
+</body>
+</html>

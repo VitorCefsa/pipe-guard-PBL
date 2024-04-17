@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PipeGuard - Water Leak Incidents</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="bg-dark text-light py-4">
+        <div class="container">
+            <h1 class="mb-0">PipeGuard - Water Leak Incidents</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Incidents<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about-us.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+            </div>
+            <div class="col-md-6">
+                <select id="filterSelect" class="form-control mb-3">
+                    <option value="all">All</option>
+                    <option value="detected">Leak Detected</option>
+                    <option value="no_leak">No Leak Detected</option>
+                </select>
+            </div>
+        </div>
+
+        <table id="incidentTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sensor ID</th>
+                    <th>Location</th>
+                    <th>Leak Type</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="incidentBody">
+                <!-- Incident rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="bg-dark text-light py-3 mt-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 PipeGuard Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (opcional, se necessário para funcionalidades específicas do Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="data.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
